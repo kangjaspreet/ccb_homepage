@@ -1,0 +1,28 @@
+ui <- tagList(
+  #useWaiter(), 
+  #waiterPreloader(html = waiting_screen, color = "#FFFFFF", fadeout = TRUE),
+  navbarPage(
+    title = "CCB Engine",
+    theme = "style.css",
+    tabPanel("HOME", icon = icon("home"), home_ui("preview_plot")),
+    tabPanel("MAPS", icon = icon("map")),
+    tabPanel("RANKS", icon = icon("chart-bar")),
+    tabPanel("TRENDS", icon = icon("chart-line"), 
+             tabsetPanel(id = "trends_tab", 
+                         tabPanel(title = "SEX TREND", sex_trends_ui("sex_trends_plot")), 
+                         tabPanel(title = "AGE TREND"), 
+                         tabPanel(title = "RACE TREND"), 
+                         tabPanel(title = "EDUCATION TREND"), 
+                         tabPanel(title = "LIFE EXPECTANCY"), 
+                         tabPanel(title = "LEADING CAUSES") 
+                         )
+             ),
+    tabPanel("DISPARITIES", icon = icon("user")),
+    tabPanel("SDOH", icon = icon("user")),
+    tabPanel("HOSPITALIZATIONS", icon = icon("hospital")),
+    tabPanel("DEMOGRAPHICS", icon = icon("user")),
+    tabPanel("TABLE", icon = icon("table")),
+    tabPanel("ABOUT", icon = icon("user"))
+    ) # Close navbarPage
+  ) # Close tagList
+  

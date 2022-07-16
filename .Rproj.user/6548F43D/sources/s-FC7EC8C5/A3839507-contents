@@ -1,0 +1,20 @@
+library(shiny)
+library(shinydashboard) # Used for boxes
+library(bslib) # For bootstrap themes
+library(waiter) # For cool loading screens
+library(dplyr)
+library(ggplot2)
+library(shinyWidgets) # For menu widgets in homepage
+
+
+waiting_screen <- tagList(
+  tags$img(src = "Logos/waiting_screen.png", width = "60%"), 
+  br(),
+  br(),
+  spin_loaders(color = "#000080"),
+  br(),
+  h4("Cool stuff loading...", style = "color:blue;")
+)
+
+source("ui_server/homepage.R")
+source("ui_server/sex_trends.R")

@@ -1,0 +1,67 @@
+home_ui <- function(id) {
+  # btn-block btn-group-container-sw
+  fluidRow(style = "margin-right: 100px; margin-left: 100px;",
+           tags$style(".btn-block {display: flex; flex-direction: column;}"),
+           # tags$head(tags$style(HTML("#menu_inputs { display: flex; justify-content: center; }")))
+           tags$style(".btn-one {background-color: #E5E1D9; color: black; font-weight: bold; margin-bottom: 5px; width: 100%; height: 100%; object-fit: contain;}", 
+                      ".btn-one.active {background-color: #006FB8; color: white; font-weight: bold; margin-bottom: 5px;}"),
+    fluidRow(style = "height: 150px;",
+      column(width = 4, style = "height: 150px;",
+             tags$img(src = "Logos/CDPH_Logo2.jpg", style = "width: 100%; height: 100%; object-fit: contain;")), 
+      column(width = 8, style = "height: 150px;",
+             fluidRow(h2("California Community Burden of Disease Engine (CCB):")), 
+             fluidRow(h4("An emerging toolset for epidemiologic analysis and scientific insight, exploring the intersection between health disparities and place"))
+             )
+    ),
+    br(),
+    fluidRow(style = "border: 1px solid; box-shadow: 1px 1px 1px 1px #B5B5B5; padding: 5px;",
+      shinydashboard::box(width = NULL,
+                          column(width = 3, style = "height: 450px;",
+                                 radioGroupButtons(NS(id, "menu_inputs"), 
+                                                   label = h4("Dynamic Menu"), 
+                                                   choices = c("MAPS", "TRENDS", 
+                                                               "RANK BY CAUSE", "RANK BY GEOGRAPHY", "AGE RACE FOCUS", "DEATH HOSP ED", 
+                                                               "DISPARITIES", "SDOH", "HOSPITALIZATIONS", "DEMOGRAPHICS"), 
+                                                   direction = "vertical", 
+                                                   justified = TRUE, 
+                                                   individual = TRUE,
+                                                   status = "one")
+                                 ), 
+                          column(width = 3, style = "height: 450px;"), 
+                          column(width = 6, style = "height: 440px; margin: 0; border: 3px solid #006FB8;",
+                                 plotOutput(NS(id, "preview_plot"), height = "435px")
+                          )
+      )
+    ), 
+    br(),
+    fluidRow(style = "padding: 10px;", 
+             column(width = 3, 
+                    radioGroupButtons(NS(id, "menu_middle_inputs"), 
+                                      label = NULL, 
+                                      choices = c("NEWS AND UPDATES", "ABOUT THE CCB", "SHA/SHIP", "SOPH UPDATES", "RESOURCES"), 
+                                      direction = "vertical", 
+                                      justified = TRUE, 
+                                      individual = TRUE, 
+                                      status = "one")), 
+             column(width = 1),
+             column(width = 8, 
+                    h3("Recent Notable Updates"), 
+                    h4(strong("Excess Mortality Data Brief - 2021 Update")), 
+                    p("Excess mortality data brief, which can be found below in the <b>Featured Stories</b> section, has been updated with 2021 data. Interesting observatons include a continuation of high increases in Drug Overdoses, ....................................................................."), 
+                    br(), 
+                    h4(strong("SDOH Tab Update")), 
+                    p("The SDOH (Social Determinants of Health) tab has been updated with additions of various plots, and more recent death and social determinants of health data."))
+    )
+  )
+}
+  
+
+home_server <- function(id) {
+  moduleServer(id, function(input, output, session) {
+    output$preview_plot <- renderPlot({
+      mtcars %>%
+        ggplot(aes(x = mpg, y = disp)) +
+        geom_point()
+    })
+  })
+}
